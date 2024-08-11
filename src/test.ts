@@ -5,5 +5,5 @@ resizeForDisplay(3840, 3840);
 
 console.log(device.limits, [...adapter.features.entries()], presentationFormat);
 console.log(code, definitions);
-const d = new WgslReflect(code);
+
 console.log(d);

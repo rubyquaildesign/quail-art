@@ -1,11 +1,11 @@
 //  MIT License. © Ian McEwan, Stefan Gustavson, Munrocket, Johan Helsing
-
+// #module quail.noise
 
 
 fn permute_3_(x: vec3<f32>) -> vec3<f32> {
     return (((x * 34.) + 1.) * x) % vec3(289.);
 }
-
+// #export
 fn simplex_noise_2d(v: vec2<f32>) -> f32 {
     let C = vec4(
         0.211324865405187, // (3.0 - sqrt(3.0)) / 6.0
@@ -45,7 +45,7 @@ fn simplex_noise_2d(v: vec2<f32>) -> f32 {
     let g = vec3(a0.x * x0.x + h.x * x0.y, a0.yz * x12.xz + h.yz * x12.yw);
     return 130. * dot(m, g);
 }
-
+// #export
 fn simplex_noise_2d_seeded(v: vec2<f32>, seed: f32) -> f32 {
     let C = vec4(
         0.211324865405187, // (3.0 - sqrt(3.0)) / 6.0
@@ -94,7 +94,7 @@ fn permute_4_(x: vec4<f32>) -> vec4<f32> {
 fn taylor_inv_sqrt_4_(r: vec4<f32>) -> vec4<f32> {
     return 1.79284291400159 - 0.85373472095314 * r;
 }
-
+// #export
 fn simplex_noise_3d(v: vec3<f32>) -> f32 {
     let C = vec2(1. / 6., 1. / 3.);
     let D = vec4(0., 0.5, 1., 2.);
@@ -165,6 +165,7 @@ fn simplex_noise_3d(v: vec3<f32>) -> f32 {
 // higher level concepts:
 
 /// Fractional brownian motion (fbm) based on 2d simplex noise
+// #export
 fn fbm_simplex_2d(pos: vec2<f32>, octaves: i32, lacunarity: f32, gain: f32) -> f32 {
     var sum = 0.;
     var amplitude = 1.;
@@ -180,6 +181,7 @@ fn fbm_simplex_2d(pos: vec2<f32>, octaves: i32, lacunarity: f32, gain: f32) -> f
 }
 
 /// Fractional brownian motion (fbm) based on seeded 2d simplex noise
+// #export
 fn fbm_simplex_2d_seeded(pos: vec2<f32>, octaves: i32, lacunarity: f32, gain: f32, seed: f32) -> f32 {
     var sum = 0.;
     var amplitude = 1.;
@@ -195,6 +197,7 @@ fn fbm_simplex_2d_seeded(pos: vec2<f32>, octaves: i32, lacunarity: f32, gain: f3
 }
 
 /// Fractional brownian motion (fbm) based on 3d simplex noise
+// #export
 fn fbm_simplex_3d(pos: vec3<f32>, octaves: i32, lacunarity: f32, gain: f32) -> f32 {
     var sum = 0.;
     var amplitude = 1.;
@@ -208,13 +211,13 @@ fn fbm_simplex_3d(pos: vec3<f32>, octaves: i32, lacunarity: f32, gain: f32) -> f
 
     return sum;
 }
-
+// #export
 fn snoise2(x: vec2<f32>) -> vec2<f32> {
     let s: f32 = simplex_noise_2d(vec2<f32>(x));
     let s1: f32 = simplex_noise_2d(vec2<f32>(x.y - 19.1, x.x + 47.2));
     return vec2<f32>(s, s1);
 } 
-
+// #export
 fn curl(p: vec2<f32>) -> vec2<f32> {
     let e: f32 = 0.1;
     let dx: vec2<f32> = vec2<f32>(e, 0.);

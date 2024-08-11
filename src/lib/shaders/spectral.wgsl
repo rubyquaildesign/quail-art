@@ -1,6 +1,7 @@
 const SPECTRAL_SIZE: i32 = 38;
 const SPECTRAL_GAMMA: f32 = 2.4;
 const SPECTRAL_EPSILON: f32 = 0.0001;
+// #module spectral
 fn spectral_uncompand(x: f32) -> f32 {
     if x < 0.04045 { return x / 12.92; } else { return pow((x + 0.055) / 1.055, SPECTRAL_GAMMA); };
 } 
@@ -137,7 +138,7 @@ fn spectral_linear_to_concentration(l1: f32, l2: f32, t: f32) -> f32 {
     let t2: f32 = l2 * pow(t, 2.);
     return t2 / (t1 + t2);
 } 
-
+// #export
 fn spectral_mix(color1: vec3<f32>, color2: vec3<f32>, t: f32) -> vec3<f32> {
     var t_var = t;
     let lrgb1: vec3<f32> = spectral_srgb_to_linear(color1);

@@ -1,5 +1,7 @@
+// #module main
 
-
+// #import snoise2 from quail.noise
+// #import spectral_mix from spectral
 fn lch2lab(lch: vec3f) -> vec3f {
     return vec3f(
         lch.x,
