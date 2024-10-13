@@ -1,25 +1,32 @@
 {
-  "name": "quail-art",
+  "name": "@rubyquaildesign/quail-art",
   "private": true,
   "type": "module",
-  "main": "./dist/main.js",
+  "main": "./dist/entry/main.js",
+  "version": "2.0.0",
+  "license":"MIT",
   "types": "./dist/main.d.ts",
+  "files": [
+    "src/**/*",
+    "dist/**/*",
+    ".npmrc"
+  ],
   "exports": {
     ".": {
-      "import": "./dist/main.js",
-      "types": "./dist/main.d.ts"
+      "import": "./dist/entry/main.js",
+      "types": "./dist/entry/main.d.ts"
     },
     "./canvas": {
-      "import": "./dist/canvas.js",
-      "types": "./dist/canvas.d.ts"
+      "import": "./dist/canvas/canvas.js",
+      "types": "./dist/canvas/canvas.d.ts"
     },
     "./webgpu": {
-      "import": "./dist/webgpu.js",
-      "types": "./dist/webgpu.d.ts"
+      "import": "./dist/webgpu/webgpu.js",
+      "types": "./dist/webgpu/webgpu.d.ts"
     },
     "./clip": {
-      "import": "./dist/clip.js",
-      "types": "./dist/clip.d.ts"
+      "import": "./dist/clip/clip.js",
+      "types": "./dist/clip/clip.d.ts"
     },
     "./shaders/*.wgsl": "./src/lib/shaders/*.wgsl"
   },
@@ -37,7 +44,6 @@
     "@webgpu/types": "^0.1.40",
     "eslint": "^9.12.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-config-standard-typescript-prettier": "^6.0.0",
     "eslint-gitignore": "^0.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "importable": "^0.1.0",
@@ -53,7 +59,7 @@
     "d3": "^7.8.5",
     "js-angusj-clipper": "^1.3.1",
     "mathjs": "^12.1.0",
-    "tinyqueue": "^2.0.3",
+    "tinyqueue": "^3.0.0",
     "webgpu-utils": "^1.1.0"
   }
 }

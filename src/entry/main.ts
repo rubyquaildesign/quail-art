@@ -30,9 +30,7 @@ const forExport = {
 	d2r: Vec.deg2rad,
 };
 Object.entries(forExport).forEach(([key, value]) => {
-	(globalThis as typeof globalThis & typeof forExport)[
-		key as keyof typeof forExport
-	] = value;
+	(globalThis as any)[key as any] = value;
 });
 declare global {
 	var {

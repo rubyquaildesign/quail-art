@@ -1,4 +1,4 @@
-import { buildClipper } from '../lib/clipping';
+import { buildClipper } from '../lib/clipping.js';
 const clipLib = await buildClipper();
 console.log(clipLib);
 

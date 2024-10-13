@@ -1,4 +1,4 @@
-import { Vec } from './vec';
+import { Vec } from './vec.js';
 
 const fractional = (t: number) => t >= 0 && t <= 1;
 enum IntersectionType {

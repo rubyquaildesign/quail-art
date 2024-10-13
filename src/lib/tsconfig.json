@@ -1,6 +1,7 @@
 {
-  "extends":["../../base-config.json"],
+  "extends":"../../base-config.json",
   "compilerOptions": {
+    "moduleResolution": "NodeNext",
     "composite": true,
     "declaration": true,
     "declarationMap": true

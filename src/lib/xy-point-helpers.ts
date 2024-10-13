@@ -1,4 +1,4 @@
-import { type Vp, Vec } from './vec';
+import { type Vp, Vec } from './vec.js';
 type XYPt = Readonly<{ x: number; y: number }>;
 type ToXy = (pt: Vp) => XYPt;
 type ToVec = (pt: XYPt) => Vec;
