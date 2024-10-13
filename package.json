@@ -1,6 +1,5 @@
 {
   "name": "@rubyquaildesign/quail-art",
-  "private": false,
   "type": "module",
   "main": "./dist/entry/main.js",
   "version": "2.0.0",
