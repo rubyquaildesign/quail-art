@@ -1,5 +1,5 @@
 /// <reference types="@webgpu/types" />
-import './main';
+import '../entry/main.js';
 if (!(navigator.gpu && navigator.gpu.requestAdapter)) {
 	alert('browser does not support WebGPU');
 	throw new Error('no adapter found');
@@ -94,18 +94,20 @@ export const resizeForDisplay = (chosenWidth: number, chosenHeight: number) => {
 		(globalThis as any)[key] = value;
 	});
 
-	(globalThis as any).renderTarget = renderTarget;
-	(globalThis as any).renderTargetView = renderTargetView;
-	(globalThis as any).depthTexture = depthTexture;
-	(globalThis as any).depthTargetView = depthTargetView;
+	globalThis.renderTarget = renderTarget;
+	globalThis.renderTargetView = renderTargetView;
+	globalThis.depthTexture = depthTexture;
+	globalThis.depthTargetView = depthTargetView;
 	return needResize;
 };
 resizeForDisplay(canvas.width, canvas.height);
 declare global {
-	let renderTarget: GPUTexture;
-	let renderTargetView: GPUTextureView;
-	let depthTexture: GPUTexture;
-	let depthTargetView: GPUTextureView;
+	/* eslint-disable no-var */
+	var renderTarget: GPUTexture;
+	var renderTargetView: GPUTextureView;
+	var depthTexture: GPUTexture;
+	var depthTargetView: GPUTextureView;
+	/* eslint-enable no-var */
 }
 
 declare global {

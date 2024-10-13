@@ -1,4 +1,4 @@
-import { Matrix } from './matrices';
+import { Matrix } from './matrices.js';
 
 const PI = Math.PI;
 const TAU = PI * 2;

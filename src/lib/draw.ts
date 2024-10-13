@@ -1,5 +1,5 @@
 import { path } from 'd3';
-import { bSpline, bsplineMat } from './path';
+import { bSpline, bsplineMat } from './path.js';
 type BSpline = ReturnType<typeof bSpline>;
 type Path = ReturnType<typeof path>;
 type Drawable =
@@ -82,14 +82,7 @@ export function drawLine(
 	line: Line,
 	ctx?: CanvasRenderingContext2D,
 ): void | string;
-export function drawLine(
-	line: Line,
-	ctx: Drawable = typeof window !== 'undefined' &&
-	'ctx' in window &&
-	window.ctx instanceof OffscreenCanvasRenderingContext2D
-		? window.ctx
-		: path(),
-) {
+export function drawLine(line: Line, ctx: Drawable = getDrawable()) {
 	ctx.moveTo(...(line[0] as TDPT));
 	ctx.lineTo(...(line[1] as TDPT));
 	if (!isCtx(ctx)) {
@@ -108,14 +101,11 @@ export function drawLoop(
 	ctx?: CanvasRenderingContext2D,
 	drawType?: 'fill' | 'stroke',
 ): void | string;
+
 export function drawLoop(
 	loop: Loop | Iterable<Pt>,
 	close: boolean,
-	ctx: Drawable = typeof window !== 'undefined' &&
-	'ctx' in window &&
-	window.ctx instanceof OffscreenCanvasRenderingContext2D
-		? window.ctx
-		: path(),
+	ctx: Drawable = getDrawable(),
 	drawType?: 'fill' | 'stroke',
 ) {
 	let count = 0;
@@ -132,6 +122,14 @@ export function drawLoop(
 	if (!isCtx(ctx)) return ctx.toString();
 }
 
+function getDrawable(): Drawable {
+	return typeof window !== 'undefined' &&
+		'ctx' in window &&
+		window.ctx instanceof OffscreenCanvasRenderingContext2D
+		? window.ctx
+		: path();
+}
+
 export function drawBezierLoop(loop: Loop, close: boolean, ctx: Path): string;
 export function drawBezierLoop(
 	loop: Loop,
@@ -142,11 +140,7 @@ export function drawBezierLoop(
 export function drawBezierLoop(
 	loop: Loop,
 	close: boolean,
-	ctx: Drawable = typeof window !== 'undefined' &&
-	'ctx' in window &&
-	window.ctx instanceof OffscreenCanvasRenderingContext2D
-		? window.ctx
-		: path(),
+	ctx: Drawable = getDrawable(),
 	drawType?: 'fill' | 'stroke',
 ) {
 	for (let i = 0; i <= loop.length - 3; i += 4) {
@@ -176,11 +170,7 @@ export function drawShape(
 ): void | string;
 export function drawShape(
 	shape: Shape,
-	ctx: Drawable = typeof window !== 'undefined' &&
-	'ctx' in window &&
-	window.ctx instanceof OffscreenCanvasRenderingContext2D
-		? window.ctx
-		: path(),
+	ctx: Drawable = getDrawable(),
 	drawType?: 'fill' | 'stroke',
 ) {
 	if (isCtx(ctx)) ctx.beginPath();

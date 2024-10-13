@@ -1,0 +1,16 @@
+{
+  "extends": "../../base-config.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true
+  },
+  "files": [
+    "./clip.ts"
+  ],
+  "references": [
+    {
+      "path": "../lib/tsconfig.json"
+    }
+  ]
+}

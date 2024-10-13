@@ -1,4 +1,11 @@
 module.exports = {
-	...require('eslint-config-standard-typescript-prettier/prettier'),
-	useTabs: true,
+	"trailingComma":  "all",
+  "semi": true,
+  "singleQuote":  true,
+  "quoteProps": "consistent",
+  "bracketSpacing": true,
+  "arrowParens": "",
+  "tabWidth":  2,
+  "parser": "typescript",
+	"useTabs": true,
 };

@@ -1,7 +1,7 @@
 import { range } from 'd3';
-import { Vec } from './vec';
+import { Vec } from './vec.js';
 import { Matrix, matrix, multiply } from 'mathjs';
-import matrices from './mat.json';
+import matrices from './mat.json' with { type: 'json' };
 type Loop = [number, number][];
 type SplineType = 'closed' | 'clamped' | 'open';
 
@@ -41,9 +41,12 @@ function matsplineMult(degree: number, x: number, sourcePoints: Vec[]) {
 
 	const mat = internalMats[degree];
 	const factors = multiply(inputMatrix, mat).toArray() as number[];
-	const result = range(degree + 1).reduce((a, b) => {
-		return a.add(sourcePoints[b].mul(factors[b]));
-	}, new Vec(0, 0));
+	const result = range(degree + 1).reduce(
+		(a, b) => {
+			return a.add(sourcePoints[b].mul(factors[b]));
+		},
+		new Vec(0, 0),
+	);
 	return result;
 }
 

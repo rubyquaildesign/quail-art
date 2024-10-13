@@ -1,6 +1,8 @@
-import { Vec } from './lib/vec';
+import { Vec } from '../lib/vec.js';
 import { range } from 'd3';
-import { c, maths as m } from './lib';
+import { c, maths as m } from '../lib/index.js';
+/* eslint-disable no-var */
+
 const PI = Math.PI;
 const TAU = Math.PI * 2;
 const vec = (x: number, y: number) => new Vec(x, y);
@@ -28,10 +30,12 @@ const forExport = {
 	d2r: Vec.deg2rad,
 };
 Object.entries(forExport).forEach(([key, value]) => {
-	(globalThis as any)[key] = value;
+	(globalThis as typeof globalThis & typeof forExport)[
+		key as keyof typeof forExport
+	] = value;
 });
 declare global {
-	const {
+	var {
 		random,
 		floor,
 		ceil,

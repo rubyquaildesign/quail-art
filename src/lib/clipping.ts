@@ -3,9 +3,9 @@ import type {
 	ClipParams,
 	OffsetParams,
 } from 'js-angusj-clipper/universal';
-import * as clipperLibrary from 'js-angusj-clipper/universal';
-import { Vec } from './vec';
-import { toVecShape, toXyShape } from './xy-point-helpers';
+import * as clipperLibrary from 'js-angusj-clipper/universal/index.js';
+import { Vec } from './vec.js';
+import { toVecShape, toXyShape } from './xy-point-helpers.js';
 function getLoopDepth(arr: any): number {
 	return Array.isArray(arr) ? 1 + getLoopDepth(arr[0]) : 0;
 }

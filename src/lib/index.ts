@@ -1,3 +1,3 @@
-export * as maths from './maths';
-export * as draw from './draw';
-export * as c from './colour';
+export * as maths from './maths.js';
+export * as draw from './draw.js';
+export * as c from './colour.js';

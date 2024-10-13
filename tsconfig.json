@@ -1,30 +1,20 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "plugins":[
-      {
-        "name": "importable",
-        "plugins":["@rupertofly/wgsl-importable-plugin","@importable/yaml"]
-      }
-    ],
-    "types": ["@webgpu/types"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["./src/main.ts","./src/canvas.ts", "./src/clip.ts","./src/webgpu.ts","./src/test.ts","./src/*.d.ts","./src/lib/*.ts"],
+  "includes": [],
+  "references": [
+    {
+      "path": "./src/lib/tsconfig.json"
+    },
+    {
+      "path": "./src/canvas/tsconfig.json"
+    },
+    {
+      "path": "./src/clip/tsconfig.json"
+    },
+    {
+      "path": "./src/entry/tsconfig.json"
+    },
+    {
+      "path": "./src/webgpu/tsconfig.json"
+    },
+  ]
 }

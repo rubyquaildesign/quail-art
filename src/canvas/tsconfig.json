@@ -1,0 +1,19 @@
+{
+  "extends": "../../base-config.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true
+  },
+  "files": [
+    "./canvas.ts"
+  ],
+  "references": [
+    {
+      "path": "../entry/tsconfig.json"
+    },
+    {
+      "path": "../lib/tsconfig.json"
+    }
+  ]
+}
