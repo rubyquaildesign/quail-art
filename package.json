@@ -2,7 +2,7 @@
 	"name": "@rubyquaildesign/quail-art",
 	"type": "module",
 	"main": "./dist/entry/main.js",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"license": "MIT",
 	"types": "./dist/main.d.ts",
 	"files": [
