@@ -1,24 +1,11 @@
 {
-  "extends":"./base-config.json",
-  "compilerOptions": {
-    "moduleResolution": "NodeNext",
-  },
-  "includes": [],
-  "references": [
-    {
-      "path": "./src/lib/tsconfig.json"
-    },
-    {
-      "path": "./src/canvas/tsconfig.json"
-    },
-    {
-      "path": "./src/clip/tsconfig.json"
-    },
-    {
-      "path": "./src/entry/tsconfig.json"
-    },
-    {
-      "path": "./src/webgpu/tsconfig.json"
-    },
-  ]
+	"extends": "./base-config.json",
+	"compilerOptions": {
+		"moduleResolution": "NodeNext",
+		"noEmit": false,
+		"emitDeclarationOnly": false,
+		"outDir": "dist",
+		"declaration": true
+	},
+	"include": ["./src/clip/*.ts", "./src/entry/*.ts", "./src/lib/**/*.ts"]
 }

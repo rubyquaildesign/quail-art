@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Test</title>
+	</head>
+	<body>
+		<div>
+			<label for="check">
+				<input type="checkbox" name="check" id="check" />
+				Magnify
+			</label>
+			<canvas id="canvas" width="1080" height="1080"></canvas>
+		</div>
+		<script type="module" src="/test.ts"></script>
+		<style>
+			:root {
+				background-color: black;
+			}
+			body {
+				padding: none;
+				margin: 0;
+			}
+			#canvas {
+				max-width: 100svw;
+				max-height: 100svh;
+				margin-inline: auto;
+				display: block;
+				box-sizing: border-box;
+				border: solid 8px #080808;
+				image-rendering: optimizeQuality;
+			}
+			label:has(> input:checked) + #canvas {
+				max-height: none;
+				max-width: none;
+				height: calc(1080px * 8);
+				width: calc(1080px * 8);
+				image-rendering: pixelated;
+			}
+
+			label {
+				position: fixed;
+				left: 0;
+				top: 0;
+				box-sizing: border-box;
+				color: white;
+				font-size: 12px;
+				font-family: sans-serif;
+				padding: 4px;
+				z-index: 100;
+			}
+		</style>
+	</body>
+</html>

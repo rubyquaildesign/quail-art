@@ -1,64 +1,63 @@
 {
-  "name": "@rubyquaildesign/quail-art",
-  "type": "module",
-  "main": "./dist/entry/main.js",
-  "version": "2.0.0",
-  "license":"MIT",
-  "types": "./dist/main.d.ts",
-  "files": [
-    "src/**/*",
-    "dist/**/*",
-    ".npmrc"
-  ],
-  "exports": {
-    ".": {
-      "import": "./dist/entry/main.js",
-      "types": "./dist/entry/main.d.ts"
-    },
-    "./canvas": {
-      "import": "./dist/canvas/canvas.js",
-      "types": "./dist/canvas/canvas.d.ts"
-    },
-    "./webgpu": {
-      "import": "./dist/webgpu/webgpu.js",
-      "types": "./dist/webgpu/webgpu.d.ts"
-    },
-    "./clip": {
-      "import": "./dist/clip/clip.js",
-      "types": "./dist/clip/clip.d.ts"
-    },
-    "./shaders/*.wgsl": "./src/lib/shaders/*.wgsl"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "tsup"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.12.0",
-    "@importable/yaml": "^0.1.1",
-    "@rupertofly/wgsl-importable-plugin": "github:rubyquaildesign/wgsl-importable-plugin",
-    "@types/d3": "^7.4.3",
-    "@types/eslint-config-prettier": "^6.11.3",
-    "@types/eslint__js": "^8.42.3",
-    "@webgpu/types": "^0.1.40",
-    "eslint": "^9.12.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-gitignore": "^0.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "importable": "^0.1.0",
-    "prettier": "^3.3.3",
-    "tsup": "^8.0.1",
-    "typescript": "^5.2.2",
-    "typescript-eslint": "^8.8.1",
-    "vite": "^5.0.0",
-    "wgsl_reflect": "github:brendan-duncan/wgsl_reflect"
-  },
-  "dependencies": {
-    "@rubyquaildesign/capture": "npm:@jsr/rubyquaildesign__capture@^2.0.0",
-    "d3": "^7.8.5",
-    "js-angusj-clipper": "^1.3.1",
-    "mathjs": "^12.1.0",
-    "tinyqueue": "^3.0.0",
-    "webgpu-utils": "^1.1.0"
-  }
+	"name": "@rubyquaildesign/quail-art",
+	"type": "module",
+	"main": "./dist/entry/main.js",
+	"version": "3.0.1",
+	"license": "MIT",
+	"types": "./dist/main.d.ts",
+	"files": [
+		"src/**/*",
+		"dist/**/*",
+		".npmrc"
+	],
+	"exports": {
+		".": {
+			"import": "./dist/entry/main.js",
+			"types": "./dist/entry/main.d.ts"
+		},
+		"./*": {
+			"import": "./dist/*.js",
+			"types": "./dist/*.d.ts"
+		}
+	},
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc --project .",
+		"prepublish": "npm run build"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.2.5",
+		"@eslint/js": "^9.12.0",
+		"@importable/yaml": "^0.1.1",
+		"@rupertofly/wgsl-importable-plugin": "github:rubyquaildesign/wgsl-importable-plugin",
+		"@tweakpane/core": "^2.0.4",
+		"@types/d3": "^7.4.3",
+		"@types/eslint-config-prettier": "^6.11.3",
+		"@types/eslint__js": "^8.42.3",
+		"@webgpu/types": "^0.1.40",
+		"canvas-bitfont": "^1.0.0",
+		"eslint": "^9.12.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-gitignore": "^0.1.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"importable": "^0.1.0",
+		"prettier": "^3.3.3",
+		"tsup": "^8.0.1",
+		"tweakpane": "^4.0.4",
+		"tweakpane-plugin-chromatic": "^0.0.3",
+		"typescript": "^5.2.2",
+		"typescript-eslint": "^8.8.1",
+		"vite": "^5.0.0",
+		"wgsl_reflect": "github:brendan-duncan/wgsl_reflect"
+	},
+	"dependencies": {
+		"@rubyquaildesign/capture": "npm:@jsr/rubyquaildesign__capture@^2.0.0",
+		"@std/collections": "npm:@jsr/std__collections@^1.0.8",
+		"d3": "^7.8.5",
+		"js-angusj-clipper": "^1.3.1",
+		"mathjs": "^12.1.0",
+		"tinyqueue": "^3.0.0",
+		"webgpu-utils": "^1.1.0",
+		"zod": "^3.23.8"
+	}
 }

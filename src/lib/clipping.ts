@@ -6,6 +6,7 @@ import type {
 import * as clipperLibrary from 'js-angusj-clipper/universal/index.js';
 import { Vec } from './vec.js';
 import { toVecShape, toXyShape } from './xy-point-helpers.js';
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 function getLoopDepth(arr: any): number {
 	return Array.isArray(arr) ? 1 + getLoopDepth(arr[0]) : 0;
 }
@@ -26,7 +27,10 @@ type JoinType = keyof typeof jts;
 export class Clip {
 	factor = 1e3;
 	preserveColinear = false;
-	constructor(public ajc: ClipperLibWrapper, factor?: number) {
+	constructor(
+		public ajc: ClipperLibWrapper,
+		factor?: number,
+	) {
 		if (factor !== undefined) {
 			this.factor = factor;
 		}
@@ -105,7 +109,7 @@ export class Clip {
 				? subjectSet.map((s) => toXyShape(s as Shape))
 				: [this.toShape(subjectSet as Shape | Loop)].map((s) =>
 						toXyShape(s, this.factor),
-				  );
+					);
 		const workingAmmount = Math.round(ammount * this.factor);
 		const offsetSettings: OffsetParams = {
 			delta: workingAmmount,

@@ -5,6 +5,7 @@ export default defineConfig({
 		'src/entry/main.ts',
 		'src/canvas/canvas.ts',
 		'src/webgpu/webgpu.ts',
+		'src/webgpu/webgpu-utils.ts',
 		'src/clip/clip.ts',
 	],
 	tsconfig: './tsconfig.json',
@@ -13,4 +14,7 @@ export default defineConfig({
 	sourcemap: true,
 	clean: true,
 	dts: true,
+	esbuildOptions(opt) {
+		opt.loader = { ...opt.loader, '.wgsl': 'text' };
+	},
 });
