@@ -2,5 +2,9 @@
 	"$schema": "https://jsr.io/schema/config-file.v1.json",
 	"name": "@rubyquaildesign/quail-art",
 	"version": "4.0.0",
-	"exports": "./src/entry/main.ts"
+	"exports": "./src/entry/main.ts",
+	"publish": {
+		"exclude": ["./webgpu/**/*"],
+		"include": ["./src/**/*"]
+	}
 }
