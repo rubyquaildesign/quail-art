@@ -1,13 +1,13 @@
 import type {
-	ClipperLibWrapper,
 	ClipParams,
+	ClipperLibWrapper,
 	OffsetParams,
 } from 'js-angusj-clipper/universal';
 import * as clipperLibrary from 'js-angusj-clipper/universal/index.js';
-import { Vec } from './vec.js';
+import type { Vec } from './vec.js';
 import { toVecShape, toXyShape } from './xy-point-helpers.js';
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-function getLoopDepth(arr: any): number {
+
+function getLoopDepth(arr: unknown): number {
 	return Array.isArray(arr) ? 1 + getLoopDepth(arr[0]) : 0;
 }
 console.log('clippo');
@@ -17,12 +17,12 @@ type Point = [number, number] | Vec | number[];
 type Loop = Point[];
 type Shape = Loop[];
 type VecShape = Vec[][];
-const c = clipperLibrary;
+const c: typeof clipperLibrary = clipperLibrary;
 const jts = {
 	miter: c.JoinType.Miter,
 	round: c.JoinType.Round,
 	square: c.JoinType.Square,
-};
+} as const;
 type JoinType = keyof typeof jts;
 export class Clip {
 	factor = 1e3;
@@ -94,12 +94,38 @@ export class Clip {
 
 		return toVecShape(result, this.factor);
 	}
+	difference(
+		subjectShape: Shape | Loop,
+		clipShape: Shape | Loop,
+	): VecShape | undefined {
+		const workingSubj = toXyShape(this.toShape(subjectShape), this.factor);
+		const workingClip = toXyShape(this.toShape(clipShape), this.factor);
+		const clipOptions = {
+			clipType: c.ClipType.Difference,
+			subjectFillType: c.PolyFillType.EvenOdd,
+			preserveCollinear: this.preserveColinear,
+			subjectInputs: [
+				{
+					closed: true,
+					data: workingSubj,
+				},
+			],
+			clipInputs: [
+				{
+					data: workingClip,
+				},
+			],
+		} satisfies ClipParams;
+		const result = this.ajc.clipToPaths(clipOptions);
+
+		return toVecShape(result, this.factor);
+	}
 
 	offset(
 		subjectSet: Shape | Loop | Shape[],
 		ammount: number,
 		joinType: JoinType = 'miter',
-		miterLimit = 2,
+		miterLimit: number = 2,
 	): VecShape | undefined {
 		const inputType = getLoopDepth(subjectSet);
 		if (inputType > 4 || inputType < 2)
@@ -125,7 +151,7 @@ export class Clip {
 		return output === undefined ? undefined : toVecShape(output, this.factor);
 	}
 }
-export async function buildClipper(factor?: number) {
+export async function buildClipper(factor?: number): Promise<Clip> {
 	console.log('building');
 
 	const lib = await clipperLibrary.loadNativeClipperLibInstanceAsync(

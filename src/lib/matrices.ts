@@ -1,9 +1,9 @@
 import { range } from 'd3';
 
 export class Matrix extends Array<number[]> {
-	static fromDomMatrix(input: DOMMatrix) {
+	static fromDomMatrix(input: DOMMatrix): Matrix {
 		if (!input.is2D) throw new Error(`3D matrices are not supported`);
-		return new this([
+		return new Matrix([
 			[input.a, input.c, input.e],
 			[input.b, input.d, input.f],
 		]);
@@ -29,7 +29,7 @@ export class Matrix extends Array<number[]> {
 		}
 	}
 
-	mapMatrix(func: (v: number, x: number, y: number) => number) {
+	mapMatrix(func: (v: number, x: number, y: number) => number): Matrix {
 		const output: number[][] = [];
 		for (let r = 0; r < this.numRows; r++) {
 			output[r] = [];
@@ -41,7 +41,7 @@ export class Matrix extends Array<number[]> {
 		return new Matrix(output);
 	}
 
-	setPos(newValue: number, col: number, row: number) {
+	setPos(newValue: number, col: number, row: number): Matrix {
 		if (col >= this.numCols)
 			throw new Error(
 				`col ${col} is larger then matrix size of ${this.numCols}`,
@@ -55,7 +55,7 @@ export class Matrix extends Array<number[]> {
 		return op;
 	}
 
-	mul(other: Matrix) {
+	mul(other: Matrix): Matrix {
 		if (other.numRows !== this.numCols)
 			throw new Error(`number of columns in the first matrix (${this.numCols}) should be
     the same as the number of rows in the second${other.numRows}`);

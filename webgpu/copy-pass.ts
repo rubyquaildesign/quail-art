@@ -2,6 +2,7 @@ import { makeShaderDataDefinitions } from 'webgpu-utils';
 import { createPPPipelineAndLayouts } from './createPipeline.js';
 import './setup.js';
 import code from './shaders/copy-frag.wgsl';
+
 const copyModule = device.createShaderModule({
 	code,
 	label: 'copy-shader-module',

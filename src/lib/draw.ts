@@ -1,5 +1,6 @@
 import { path } from 'd3';
-import { bSpline, bsplineMat } from './path.js';
+import { type bSpline, bsplineMat } from './path.js';
+
 type BSpline = ReturnType<typeof bSpline>;
 type Path = ReturnType<typeof path>;
 type Drawable =
@@ -12,18 +13,23 @@ export type Loop = TDPT[];
 export type Shape = Loop[];
 type Pt = TDPT | number[];
 type XYPt = { x: number; y: number };
-export const PI = Math.PI;
-export const TAU = 2 * Math.PI;
-const sqrt = Math.sqrt;
+export const PI: number = Math.PI;
+export const TAU: number = 2 * Math.PI;
+const sqrt: typeof Math.sqrt = Math.sqrt;
 const EPSILON = 1e-12;
-export function equivilant(a: number, b: number) {
+export function equivilant(a: number, b: number): boolean {
 	return Math.abs(a - b) < EPSILON;
 }
-
+/**
+ * Random Helper
+ *
+ * @export
+ * @return {*}
+ */
 export function rndm(): number;
 export function rndm(max: number): number;
 export function rndm(min: number, max: number): number;
-export function rndm(...args: number[]) {
+export function rndm(...args: number[]): number {
 	if (args[0] === undefined) {
 		return Math.random();
 	}
@@ -57,7 +63,7 @@ function isXYPt(a: XYPt | Pt): a is XYPt {
 	return (a as XYPt).x !== undefined;
 }
 
-export function length<T extends XYPt | Pt>(a: T, b: T) {
+export function length<T extends XYPt | Pt>(a: T, b: T): number {
 	if (isXYPt(a) && isXYPt(b)) {
 		return lenxy(a, b);
 	}
@@ -81,8 +87,11 @@ export function drawLine(line: Line, ctx: Path): string;
 export function drawLine(
 	line: Line,
 	ctx?: CanvasRenderingContext2D,
-): void | string;
-export function drawLine(line: Line, ctx: Drawable = getDrawable()) {
+): undefined | string;
+export function drawLine(
+	line: Line,
+	ctx: Drawable = getDrawable(),
+): undefined | string {
 	ctx.moveTo(...(line[0] as TDPT));
 	ctx.lineTo(...(line[1] as TDPT));
 	if (!isCtx(ctx)) {
@@ -100,14 +109,14 @@ export function drawLoop(
 	close: boolean,
 	ctx?: CanvasRenderingContext2D,
 	drawType?: 'fill' | 'stroke',
-): void | string;
+): undefined | string;
 
 export function drawLoop(
 	loop: Loop | Iterable<Pt>,
 	close: boolean,
 	ctx: Drawable = getDrawable(),
 	drawType?: 'fill' | 'stroke',
-) {
+): undefined | string {
 	let count = 0;
 
 	for (const point of loop) {
@@ -136,13 +145,13 @@ export function drawBezierLoop(
 	close: boolean,
 	ctx?: CanvasRenderingContext2D,
 	drawType?: 'fill' | 'stroke',
-): void | string;
+): undefined | string;
 export function drawBezierLoop(
 	loop: Loop,
 	close: boolean,
 	ctx: Drawable = getDrawable(),
 	drawType?: 'fill' | 'stroke',
-) {
+): undefined | string {
 	for (let i = 0; i <= loop.length - 3; i += 4) {
 		if (i === 0) ctx.moveTo(...(loop[0] as TDPT));
 		else ctx.lineTo(...(loop[i] as TDPT));
@@ -167,12 +176,12 @@ export function drawShape(
 	shape: Shape,
 	ctx?: CanvasRenderingContext2D,
 	drawType?: 'fill' | 'stroke',
-): void | string;
+): undefined | string;
 export function drawShape(
 	shape: Shape,
 	ctx: Drawable = getDrawable(),
 	drawType?: 'fill' | 'stroke',
-) {
+): undefined | string {
 	if (isCtx(ctx)) ctx.beginPath();
 	for (const loop of shape) drawLoop(loop, true, ctx);
 	if (isCtx(ctx) && drawType === 'fill') ctx.fill();
@@ -190,7 +199,7 @@ export function drawBezierShape(
 	shape: Shape,
 	ctx: Drawable = path(),
 	drawType?: 'fill' | 'stroke',
-) {
+): undefined | string {
 	if (isCtx(ctx)) ctx.beginPath();
 	for (const loop of shape) drawBezierLoop(loop, true, ctx);
 	if (isCtx(ctx) && drawType === 'fill') ctx.fill();
@@ -198,16 +207,14 @@ export function drawBezierShape(
 	if (!isCtx(ctx)) return ctx.toString();
 }
 
+type Canv2d = OffscreenCanvasRenderingContext2D | CanvasRenderingContext2D;
+
 export function drawDot(
 	point: Pt,
 	radius: number,
-	ctx = typeof window !== 'undefined' &&
-	'ctx' in window &&
-	window.ctx instanceof OffscreenCanvasRenderingContext2D
-		? window.ctx
-		: undefined,
+	ctx: Canv2d,
 	drawType?: 'fill' | 'stroke',
-) {
+): void {
 	const [x, y] = point;
 	if (!ctx) throw Error('no context found');
 	ctx.beginPath();
@@ -232,7 +239,7 @@ export function drawFauxQuadLoop(
 	loop: Loop,
 	close: boolean,
 	ctx: Drawable = path(),
-) {
+): undefined | string {
 	const toDraw = loop.slice();
 	const ptsNo = toDraw.length;
 
@@ -271,7 +278,7 @@ export function drawFauxCubicLoop(
 	loop: Loop,
 	close: boolean,
 	ctx: Drawable = path(),
-) {
+): undefined | string {
 	const toDraw = loop.slice();
 	const inputLength = toDraw.length;
 	const start = toDraw.shift() as [number, number];
@@ -315,8 +322,8 @@ export function drawFauxCubicLoop(
 export function drawBSpline(
 	spline: BSpline,
 	ctx: Drawable,
-	resolution = spline.controlPoints.length * 10,
-) {
+	resolution: number = spline.controlPoints.length * 10,
+): void {
 	const start = bsplineMat(spline, 0);
 	ctx.moveTo(start.x, start.y);
 	for (let i = 1; i <= resolution; i++) {

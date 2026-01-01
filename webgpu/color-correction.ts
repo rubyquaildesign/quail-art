@@ -1,5 +1,5 @@
 import {
-	ArrayBufferViews,
+	type ArrayBufferViews,
 	makeShaderDataDefinitions,
 	makeStructuredView,
 } from 'webgpu-utils';

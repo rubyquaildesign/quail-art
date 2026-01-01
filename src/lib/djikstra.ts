@@ -17,7 +17,7 @@ export function djikstraPath<T = number>(
 	end: T,
 	getNeighbours: NeighbourFunc<T>,
 	getDistance: DistanceFunc<T> = () => 1,
-) {
+): T[] {
 	const frontier = new TinyQueue<{ v: T; n: number }>(
 		undefined,
 		(a, b) => b.n - a.n,

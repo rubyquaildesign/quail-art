@@ -1,9 +1,10 @@
-import eslint from '@eslint/js';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import tseslint from 'typescript-eslint';
-import eslintPluginPrettierConfig from 'eslint-plugin-prettier/recommended';
+import eslint from '@eslint/js';
 import { readGitignoreFiles } from 'eslint-gitignore';
+import eslintPluginPrettierConfig from 'eslint-plugin-prettier/recommended';
+import tseslint from 'typescript-eslint';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export default tseslint.config(
 	eslint.configs.recommended,

@@ -1,6 +1,6 @@
 import { Vec } from './vec.js';
 
-const fractional = (t: number) => t >= 0 && t <= 1;
+const fractional = (t: number): boolean => t >= 0 && t <= 1;
 enum IntersectionType {
 	overlap = 'overlap',
 	intersect = 'intersect',
@@ -31,11 +31,11 @@ export class Line {
 		this.end = b;
 	}
 
-	get vector() {
+	get vector(): Vec {
 		return this.end.sub(this.start);
 	}
 
-	get length() {
+	get length(): number {
 		return this.vector.len();
 	}
 
@@ -43,21 +43,21 @@ export class Line {
 		return [this.start, this.end];
 	}
 
-	updateStart(n: Vec) {
+	updateStart(n: Vec): this {
 		this.start = n.clone();
 		return this;
 	}
 
-	updateEnd(n: Vec) {
+	updateEnd(n: Vec): this {
 		this.end = n.clone();
 		return this;
 	}
 
-	cloneLine() {
+	cloneLine(): Line {
 		return new Line(this.start, this.end);
 	}
 
-	reverse() {
+	reverse(): this {
 		const temporary = this.start;
 		this.updateStart(this.end).updateEnd(temporary);
 		return this;
@@ -122,7 +122,7 @@ export class Line {
 		return { onLine, t, pt: this.vector.mul(t).add(this.start) };
 	}
 
-	minDistToPoint(point: Vec) {
+	minDistToPoint(point: Vec): number {
 		const l2 = this.vector.lenSq();
 		if (l2 === 0) {
 			return point.dist(this.start);
@@ -134,7 +134,7 @@ export class Line {
 		return point.dist(this.end);
 	}
 
-	clockwiseDir() {
+	clockwiseDir(): number {
 		return (
 			-1 *
 			Math.sign(new Vec(0, 1).cross(this.vector)) *
@@ -142,28 +142,28 @@ export class Line {
 		);
 	}
 
-	isEqualTo(other: Line) {
+	isEqualTo(other: Line): boolean {
 		return (
 			(this.start.isEqualTo(other.end) && this.end.isEqualTo(other.start)) ||
 			(this.start.isEqualTo(other.start) && this.end.isEqualTo(other.end))
 		);
 	}
 
-	clone() {
+	clone(): Line {
 		return new Line(this.start, this.end);
 	}
 
-	offsetStart(offset: number) {
+	offsetStart(offset: number): Line {
 		const t = this.vector.setLength(offset);
 		return this.updateStart(this.start.add(t));
 	}
 
-	offsetEnd(offset: number) {
+	offsetEnd(offset: number): Line {
 		const t = this.start.sub(this.end).setLength(offset);
 		return this.updateEnd(this.end.add(t));
 	}
 
-	offsetBoth(offset: number) {
+	offsetBoth(offset: number): Line {
 		return this.offsetStart(offset).offsetEnd(offset);
 	}
 }

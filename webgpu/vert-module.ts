@@ -1,6 +1,7 @@
 import { makeShaderDataDefinitions } from 'webgpu-utils';
 import './setup.js';
 import code from './shaders/fs-vert.wgsl';
+
 const vertDefinitions = makeShaderDataDefinitions(code);
 /** @description Shader Module for a fullscreen triangle
  *

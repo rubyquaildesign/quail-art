@@ -3,15 +3,15 @@ import { polygonCentroid } from 'd3';
 type TDLPT = Array<[number, number]>;
 type Pt = [number, number];
 type Loop = Pt[];
-function sqr(x: number) {
+function sqr(x: number): number {
 	return x * x;
 }
 
-function dist2(v: Pt, w: Pt) {
+function dist2(v: Pt, w: Pt): number {
 	return sqr(v[0] - w[0]) + sqr(v[1] - w[1]);
 }
 
-function distToSegmentSquared(p: Pt, v: Pt, w: Pt) {
+function distToSegmentSquared(p: Pt, v: Pt, w: Pt): number {
 	const l2 = dist2(v, w);
 
 	if (l2 === 0) return dist2(p, v);
@@ -22,11 +22,11 @@ function distToSegmentSquared(p: Pt, v: Pt, w: Pt) {
 	return dist2(p, [v[0] + t * (w[0] - v[0]), v[1] + t * (w[1] - v[1])]);
 }
 
-export function distToSegment(p: Pt, v: Pt, w: Pt) {
+export function distToSegment(p: Pt, v: Pt, w: Pt): number {
 	return Math.sqrt(distToSegmentSquared(p, v, w));
 }
 
-export function minDistFromCentroid(poly: Loop) {
+export function minDistFromCentroid(poly: Loop): number {
 	const c = polygonCentroid(poly as TDLPT);
 	const r: number[] = [];
 

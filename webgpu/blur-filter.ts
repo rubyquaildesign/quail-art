@@ -9,6 +9,7 @@ import kawaseCode from './shaders/kawase.wgsl';
 import filterCode from './shaders/threshold-filter-code.wgsl';
 import { BufUsage, TexUsage } from './usage-enums.js';
 import { fsPipelineVertState, vertDefinitions } from './vert-module.js';
+
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
 const oneOneblend: GPUBlendState = {

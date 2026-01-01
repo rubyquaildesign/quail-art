@@ -2,7 +2,7 @@
 	"name": "@rubyquaildesign/quail-art",
 	"type": "module",
 	"main": "./dist/entry/main.js",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"license": "MIT",
 	"types": "./dist/main.d.ts",
 	"files": [
@@ -26,7 +26,7 @@
 		"prepublish": "npm run build"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.2.5",
+		"@biomejs/biome": "2.3.10",
 		"@eslint/js": "^9.12.0",
 		"@importable/yaml": "^0.1.1",
 		"@rupertofly/wgsl-importable-plugin": "github:rubyquaildesign/wgsl-importable-plugin",
@@ -36,12 +36,7 @@
 		"@types/eslint__js": "^8.42.3",
 		"@webgpu/types": "^0.1.40",
 		"canvas-bitfont": "^1.0.0",
-		"eslint": "^9.12.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-gitignore": "^0.1.0",
-		"eslint-plugin-prettier": "^5.2.1",
 		"importable": "^0.1.0",
-		"prettier": "^3.3.3",
 		"tsup": "^8.0.1",
 		"tweakpane": "^4.0.4",
 		"tweakpane-plugin-chromatic": "^0.0.3",

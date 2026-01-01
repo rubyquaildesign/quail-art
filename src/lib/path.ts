@@ -1,10 +1,12 @@
 import { range } from 'd3';
-import { Vec } from './vec.js';
-import { Matrix, matrix, multiply } from 'mathjs';
+import { type Matrix, matrix, multiply } from 'mathjs';
 import matrices from './mat.json' with { type: 'json' };
+import { Vec } from './vec.js';
+
 type Loop = [number, number][];
 type SplineType = 'closed' | 'clamped' | 'open';
-
+type VecLoop = Vec[];
+type VecShape = VecLoop[];
 const internalMats: Matrix[] = [];
 Object.keys(matrices).forEach((k) => {
 	const key = k as keyof typeof matrices;
@@ -13,7 +15,7 @@ Object.keys(matrices).forEach((k) => {
 	internalMats[Number.parseInt(key, 10)] = mat;
 });
 
-export function bsplineMat(spline: BasisSpline, t: number) {
+export function bsplineMat(spline: BasisSpline, t: number): Vec {
 	if (t >= 1) t = 1;
 	const u = t * (spline.knots.length - spline.degree);
 	const knotIndex = t === 1 ? u - 1 : Math.floor(u);
@@ -25,7 +27,7 @@ export function bsplineMat(spline: BasisSpline, t: number) {
 	return matsplineMult(spline.degree, x, sourcePoints);
 }
 
-export function cubicBSplineToBezierSpline(spline: BasisSpline) {
+export function cubicBSplineToBezierSpline(spline: BasisSpline): VecShape {
 	if (spline.degree !== 3) throw new Error('spline is not degree 3');
 	return range(spline.knots.length - 3).map((i) => {
 		const pts = range(4).map((j) => spline.controlPoints[spline.knots[i + j]]);
@@ -33,7 +35,7 @@ export function cubicBSplineToBezierSpline(spline: BasisSpline) {
 	});
 }
 
-function matsplineMult(degree: number, x: number, sourcePoints: Vec[]) {
+function matsplineMult(degree: number, x: number, sourcePoints: Vec[]): Vec {
 	const inputMatrix = matrix(range(degree + 1).map((i) => x ** i));
 	if (internalMats[degree] === undefined) {
 		throw new Error(`no matrix for degree of ${degree}`);
@@ -41,17 +43,16 @@ function matsplineMult(degree: number, x: number, sourcePoints: Vec[]) {
 
 	const mat = internalMats[degree];
 	const factors = multiply(inputMatrix, mat).toArray() as number[];
-	const result = range(degree + 1).reduce(
-		(a, b) => {
-			return a.add(sourcePoints[b].mul(factors[b]));
-		},
-		new Vec(0, 0),
-	);
+	const result = range(degree + 1).reduce((a, b) => {
+		return a.add(sourcePoints[b].mul(factors[b]));
+	}, new Vec(0, 0));
 	return result;
 }
 
 type CubicSplineInput = Vec[];
-function bezierFromCubicBSplineSection(pts: CubicSplineInput) {
+function bezierFromCubicBSplineSection(
+	pts: CubicSplineInput,
+): [Vec, Vec, Vec, Vec] {
 	if (pts.length < 4) throw new Error(`input is less then 4`);
 	const a = matsplineMult(3, 0, pts);
 	const d = matsplineMult(3, 1, pts);
@@ -97,8 +98,8 @@ class BasisSpline {
 		cps: Loop,
 		degree: number,
 		type: SplineType,
-		useLUT = false,
-		depth = 0,
+		useLUT: boolean = false,
+		depth: number = 0,
 
 		knots?: number[],
 	) {
@@ -170,7 +171,7 @@ class BasisSpline {
 			newLut[maxValue] = 1;
 			this.lut = newLut;
 
-			this.interpolateLut = (t: number) => {
+			this.interpolateLut = (t: number): number => {
 				if (!this.lut) throw Error('no lut found');
 				const lut = this.lut;
 				if (t === 1) return 1;
@@ -188,8 +189,8 @@ export function bSpline(
 	cps: Vec[],
 	degree: number,
 	closed: SplineType = 'clamped',
-	useLUT = false,
-	depth = 2,
-) {
+	useLUT: boolean = false,
+	depth: number = 2,
+): BasisSpline {
 	return new BasisSpline(cps, degree, closed, useLUT, depth);
 }
